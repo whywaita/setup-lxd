@@ -31,7 +31,7 @@ jobs:
         run: lxc launch ubuntu:focal instance
       - name: Check network connectivity
         run: |
-          sleep 5  # wait to attach ip address
+          sleep 20  # wait to attach ip address
           lxc exec instance -- dig google.com +short
           lxc exec instance -- curl https://github.com
       - name: Show information of storage and network
