@@ -1,0 +1,26 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - ubuntu-20.04
+          - ubuntu-18.04
+          - ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run ${{ github.repository }}@${{ github.sha }}
+        uses: ./
+      - name: launch instance
+        run: lxc launch ubuntu:focal instance
+      - name: check network connectivity
+        run: |
+          lxc exec instance -- dig github.com
+          lxc exec instance -- ping -c 5 github.com

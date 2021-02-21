@@ -1,0 +1,43 @@
+name: setup-lxd
+author: whywaita
+description: setup LXD on GitHub Runner in Ubuntu
+branding:
+  icon: package
+inputs:
+  lxd_version:
+    description: target version from snapcraft
+    required: true
+    default: latest/stable
+
+runs:
+  using: composite
+  steps:
+    - name: Check platform
+      run: if [[ "${{ runner.os }}" != "Linux" ]]; then echo "::error::Unsupported platform - ${{ runner.os }}"; exit 1; fi
+      shell: bash
+    - name: initalize LXD
+      run: |
+        sudo snap install lxd --channel=${{ inputs.lxd_version }}
+        sudo chmod o+g $([ ${ImageOS#ubuntu} -ge 20 ] && echo '/var/snap/lxd/common/lxd/unix.socket' || echo '/var/lib/lxd/unix.socket' )
+
+        cat <<EOF | lxd init --preseed
+        storage_pools:
+        - name: default
+          driver: dir
+        networks:
+        - name: lxdbr0
+          type: bridge
+          config:
+            ipv4.address: auto
+            ipv6.address: none
+
+        profiles:
+        - name: default
+          devices:
+            root:
+              path: /
+              pool: default
+              type: disk
+        EOF
+
+        lxc profile device add default eth0 nic name=eth0 network=lxdbr0
