@@ -19,10 +19,16 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run ${{ github.repository }}@${{ github.sha }}
         uses: ./
-      - name: launch instance
+      - name: Launch instance
         run: lxc launch ubuntu:focal instance
-      - name: check network connectivity
+      - name: Check network connectivity
         run: |
           sleep 5  # wait to attach ip address
           lxc exec instance -- dig google.com +short
           lxc exec instance -- curl https://github.com
+      - name: Show information of storage and network
+        run: |
+          lxc storage list
+          lxc storage info default
+          lxc network list
+          lxc network lxdbr0
