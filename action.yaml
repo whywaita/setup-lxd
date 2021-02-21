@@ -18,7 +18,7 @@ runs:
     - name: initalize LXD
       run: |
         sudo snap install lxd --channel=${{ inputs.lxd_version }}
-        sudo chmod o+g $([ ${ImageOS#ubuntu} -ge 20 ] && echo '/var/snap/lxd/common/lxd/unix.socket' || echo '/var/lib/lxd/unix.socket' )
+        sudo chmod o+g $([ $(echo "$(cat /etc/lsb-release | grep DISTRIB_RELEASE | cut -d"=" -f2) > 20" | bc) == 1 ] && echo '/var/snap/lxd/common/lxd/unix.socket' || echo '/var/lib/lxd/unix.socket' )
 
         cat <<EOF | lxd init --preseed
         storage_pools:
