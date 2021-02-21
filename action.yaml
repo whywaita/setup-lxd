@@ -41,3 +41,4 @@ runs:
         EOF
 
         lxc profile device add default eth0 nic name=eth0 network=lxdbr0
+      shell: bash
