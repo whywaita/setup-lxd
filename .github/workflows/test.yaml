@@ -23,5 +23,4 @@ jobs:
         run: lxc launch ubuntu:focal instance
       - name: check network connectivity
         run: |
-          lxc exec instance -- dig github.com
           lxc exec instance -- ping -c 5 github.com
