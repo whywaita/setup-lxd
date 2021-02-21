@@ -18,8 +18,6 @@ jobs:
         lxd_version:
           - latest/stable
           - 4.0/stable
-          - 3.0/stable
-          - 2.0/stable
           - latest/edge
     steps:
       - uses: actions/checkout@v2

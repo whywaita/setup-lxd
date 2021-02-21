@@ -18,8 +18,7 @@ runs:
     - name: initalize LXD
       run: |
         sudo snap install lxd --channel=${{ inputs.lxd_version }}
-        sudo gpasswd -a ${USER} lxd
-        sudo newgrp lxd
+        sudo chmod o+g '/var/snap/lxd/common/lxd/unix.socket'
 
         cat <<EOF | lxd init --preseed
         storage_pools:
