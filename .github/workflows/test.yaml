@@ -28,7 +28,11 @@ jobs:
           lxc exec instance -- curl https://github.com
       - name: Show information of storage and network
         run: |
+          echo "lxc storage list"
           lxc storage list
+          echo "lxc storage info default"
           lxc storage info default
+          echo "lxc network list"
           lxc network list
-          lxc network lxdbr0
+          echo "lxc network info lxdbr0"
+          lxc network info lxdbr0
