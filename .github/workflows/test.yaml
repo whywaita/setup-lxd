@@ -25,4 +25,4 @@ jobs:
         run: |
           sleep 5  # wait to attach ip address
           lxc exec instance -- dig google.com +short
-          lxc exec instance -- ping -c 5 github.com
+          lxc exec instance -- curl https://github.com
