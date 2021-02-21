@@ -3,6 +3,7 @@ author: whywaita
 description: setup LXD on GitHub Runner in Ubuntu
 branding:
   icon: package
+  color: blue
 inputs:
   lxd_version:
     description: target version from snapcraft
