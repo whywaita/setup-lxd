@@ -15,10 +15,18 @@ jobs:
           - ubuntu-20.04
           - ubuntu-18.04
           - ubuntu-16.04
+        lxd_version:
+          - latest/stable
+          - 4.0/stable
+          - 3.0/stable
+          - 2.0/stable
+          - latest/edge
     steps:
       - uses: actions/checkout@v2
       - name: Run ${{ github.repository }}@${{ github.sha }}
         uses: ./
+        with:
+          lxd_version: ${{ matrix.lxd_version }}
       - name: Launch instance
         run: lxc launch ubuntu:focal instance
       - name: Check network connectivity
